@@ -1,21 +1,21 @@
-'use server';
+"use server";
 
-import { getTranscriptionStrategy } from '@/lib/ai/transcription';
-import { isValidFile } from '@/lib/validation';
+import { getTranscriptionStrategy } from "@/lib/ai/transcription";
+import { isValidFile } from "@/lib/validation";
 
 export async function transcribeAudio(formData: FormData) {
   try {
-    const file = formData.get('file');
+    const file = formData.get("file");
 
     if (!isValidFile(file)) {
-      return { success: false, error: 'Invalid or missing audio file' };
+      return { success: false, error: "Invalid or missing audio file" };
     }
 
     const text = await getTranscriptionStrategy().transcribe(file);
 
     return { success: true, text };
   } catch (error) {
-    console.error('Transcription error:', error);
-    return { success: false, error: 'Transcription failed' };
+    console.error("Transcription error:", error);
+    return { success: false, error: "Transcription failed" };
   }
 }

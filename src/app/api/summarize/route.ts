@@ -1,5 +1,5 @@
-import { getSummaryStrategy } from '@/lib/ai/summary';
-import { extractPrompt } from '@/lib/validation';
+import { getSummaryStrategy } from "@/lib/ai/summary";
+import { extractPrompt } from "@/lib/validation";
 
 export const maxDuration = 30;
 
@@ -10,22 +10,22 @@ export async function POST(req: Request): Promise<Response> {
 
     if (!prompt) {
       return new Response(
-        JSON.stringify({ error: 'Missing or empty prompt' }),
-        { 
-          status: 400, 
-          headers: { 'Content-Type': 'application/json' } 
+        JSON.stringify({ error: "Missing or empty prompt" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
 
     return await getSummaryStrategy().summarize(prompt);
   } catch (error) {
-    console.error('Error in summarize route:', error);
+    console.error("Error in summarize route:", error);
     return new Response(
-      JSON.stringify({ error: 'An error occurred while generating the summary' }),
-      { 
+      JSON.stringify({ error: "An error occurred while generating the summary" }),
+      {
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       }
     );
   }

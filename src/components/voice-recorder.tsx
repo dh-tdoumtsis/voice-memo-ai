@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { transcribeAudio } from '@/app/actions';
-import { useCompletion } from '@ai-sdk/react';
-import { useAudioRecorder } from '@/hooks/use-audio-recorder';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { transcribeAudio } from "@/app/actions";
+import { useCompletion } from "@ai-sdk/react";
+import { useAudioRecorder } from "@/hooks/use-audio-recorder";
 
 export default function VoiceRecorder() {
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();
@@ -13,11 +13,11 @@ export default function VoiceRecorder() {
   const [isTranscribing, setIsTranscribing] = useState(false);
 
   const { complete, completion, isLoading: isThinking } = useCompletion({
-    api: '/api/summarize',
+    api: "/api/summarize",
     experimental_throttle: 200,
     onError: (err) => {
-      console.error('Stream error:', err);
-      alert('Summary failed. Check console.');
+      console.error("Stream error:", err);
+      alert("Summary failed. Check console.");
     },
   });
 
@@ -26,7 +26,7 @@ export default function VoiceRecorder() {
       const audioBlob = await stopRecording();
       setIsTranscribing(true);
       const formData = new FormData();
-      formData.append('file', audioBlob);
+      formData.append("file", audioBlob);
       const result = await transcribeAudio(formData);
       setIsTranscribing(false);
 
@@ -34,11 +34,11 @@ export default function VoiceRecorder() {
         setTranscript(result.text);
         await complete(result.text);
       } else {
-        alert(`Transcription failed: ${result.error ?? 'Unknown error'}`);
+        alert(`Transcription failed: ${result.error ?? "Unknown error"}`);
       }
     } catch {
       setIsTranscribing(false);
-      alert('An unexpected error occurred. Please try again.');
+        alert("An unexpected error occurred. Please try again.");
     }
   };
 

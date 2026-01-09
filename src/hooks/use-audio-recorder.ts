@@ -28,7 +28,7 @@ export function useAudioRecorder() {
       if (!mediaRecorderRef.current) return reject("No recorder found");
 
       mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(chunksRef.current, { type: 'audio/mp3' });
+        const audioBlob = new Blob(chunksRef.current, { type: "audio/mp3" });
         resolve(audioBlob); 
       };
 
