@@ -4,22 +4,22 @@ A modern voice memo app that records audio, transcribes it using AI, and generat
 
 ## ✨ Features
 
-- 🎤 **Voice Recording** - Browser-based audio capture
-- 📝 **AI Transcription** - Gemini AI or OpenAI Whisper
-- ✨ **Smart Summaries** - AI-generated key takeaways with streaming
-- 🔄 **Multi-Provider** - Switch between Gemini, OpenAI, or Mock (dev)
-- 🎨 **Modern UI** - Built with shadcn/ui and Tailwind CSS
+- **Voice Recording** - Browser-based audio capture
+- **AI Transcription** - Gemini AI or OpenAI Whisper
+- **Smart Summaries** - AI-generated key takeaways with streaming
+- **Multi-Provider** - Switch between Gemini, OpenAI, or Mock (dev)
+- **UI** - Built with shadcn/ui and Tailwind CSS
 
 ## 🛠️ Tech Stack
 
-**Framework:** Next.js 15 (App Router) • TypeScript  
+**Framework:** Next.js 16 (App Router) • TypeScript  
 **UI:** React • Tailwind CSS • shadcn/ui  
 **AI:** Vercel AI SDK • Google Gemini • OpenAI  
 
 ## 🏗️ Architecture
 
 - **State Machine Pattern** - Type-safe workflow (idle → recording → transcribing → thinking → complete)
-- **Map-based Providers** - Clean provider switching
+- **Map-based Providers** - Provider switching
 
 ## 🚀 Quick Start
 
