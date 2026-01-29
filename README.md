@@ -1,44 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VoiceMemo AI
 
-## Getting Started
+A modern voice memo app that records audio, transcribes it using AI, and generates structured summaries with key takeaways and action items.
 
-First, run the development server:
+## ✨ Features
+
+- 🎤 **Voice Recording** - Browser-based audio capture
+- 📝 **AI Transcription** - Gemini AI or OpenAI Whisper
+- ✨ **Smart Summaries** - AI-generated key takeaways with streaming
+- 🔄 **Multi-Provider** - Switch between Gemini, OpenAI, or Mock (dev)
+- 🎨 **Modern UI** - Built with shadcn/ui and Tailwind CSS
+
+## 🛠️ Tech Stack
+
+**Framework:** Next.js 15 (App Router) • TypeScript  
+**UI:** React • Tailwind CSS • shadcn/ui  
+**AI:** Vercel AI SDK • Google Gemini • OpenAI  
+
+## 🏗️ Architecture
+
+- **State Machine Pattern** - Type-safe workflow (idle → recording → transcribing → thinking → complete)
+- **Map-based Providers** - Clean provider switching
+
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Add your API keys to .env
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-## Environment
+## 🔧 Environment Variables
 
-Copy `.env.example` to `.env` and adjust:
+```bash
+# AI Provider (optional, defaults to mock in dev)
+AI_PROVIDER=mock  # or "gemini" | "openai"
 
-- **`AI_PROVIDER`** – `mock` (default), `gemini`, or `openai`. You can also pick a provider in the UI.
-- **`GOOGLE_GENERATIVE_AI_KEY`** – Required when using Gemini (transcription + summary).
-- **`OPENAI_API_KEY`** – Required when using OpenAI (Whisper transcription + GPT-4o-mini summary).
+# API Keys (required for respective providers)
+GOOGLE_GENERATIVE_AI_KEY=your_gemini_key
+OPENAI_API_KEY=your_openai_key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Note:** Use `AI_PROVIDER=mock` for development without API keys.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🗺️ Roadmap
 
-## Learn More
+**v1.0 (Current)**
+- ✅ Voice recording & transcription
+- ✅ AI-powered summaries with streaming
+- ✅ Multi-provider support
+- ✅ State machine architecture
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**v2.0 (Coming Soon)**
+- 🔜 User authentication (login/signup)
+- 🔜 Database persistence (Prisma + PostgreSQL)
+- 🔜 Memo history & search
+- 🔜 User-specific memos
