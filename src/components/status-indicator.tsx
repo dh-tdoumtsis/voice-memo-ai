@@ -4,6 +4,12 @@ interface StatusIndicatorProps {
   status: Status;
 }
 
+const STATUS_CONFIG = {
+  recording: { color: "text-red-500", icon: "●", text: "Recording..." },
+  transcribing: { color: "text-amber-500", icon: "⚡", text: "Transcribing..." },
+  thinking: { color: "text-indigo-500", icon: "🧠", text: "Thinking..." },
+} as const;
+
 export function StatusIndicator({ status }: StatusIndicatorProps) {
   if (status.type === "error") {
     return (
@@ -13,29 +19,17 @@ export function StatusIndicator({ status }: StatusIndicatorProps) {
     );
   }
 
-  if (status.type === "recording") {
-    return (
-      <div className="min-h-[24px] text-sm font-medium">
-        <span className="text-red-500 flex items-center gap-2">● Recording...</span>
-      </div>
-    );
+  if (status.type === "idle") {
+    return <div className="min-h-[24px] text-sm font-medium" />;
   }
 
-  if (status.type === "transcribing") {
-    return (
-      <div className="min-h-[24px] text-sm font-medium">
-        <span className="text-amber-500 flex items-center gap-2">⚡ Transcribing...</span>
-      </div>
-    );
-  }
+  const config = STATUS_CONFIG[status.type];
 
-  if (status.type === "thinking") {
-    return (
-      <div className="min-h-[24px] text-sm font-medium">
-        <span className="text-indigo-500 flex items-center gap-2">🧠 Thinking...</span>
-      </div>
-    );
-  }
-
-  return <div className="min-h-[24px] text-sm font-medium" />;
+  return (
+    <div className="min-h-[24px] text-sm font-medium">
+      <span className={`${config.color} flex items-center gap-2`}>
+        {config.icon} {config.text}
+      </span>
+    </div>
+  );
 }

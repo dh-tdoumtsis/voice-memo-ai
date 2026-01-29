@@ -1,5 +1,5 @@
 const API_KEY_ENV_VARS = {
-  gemini: "GOOGLE_GENERATIVE_AI_KEY",
+  gemini: "GOOGLE_GENERATIVE_AI_API_KEY",
   openai: "OPENAI_API_KEY",
 } as const;
 

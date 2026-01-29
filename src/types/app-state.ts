@@ -20,8 +20,9 @@ export function getDisplayStatus(state: AppState, hasCompletion: boolean): Statu
   if (state.status === "idle" || state.status === "complete") {
     return { type: "idle" };
   }
-  if (state.status === "thinking" && !hasCompletion) {
-    return { type: "thinking" };
+  if (state.status === "thinking") {
+    // Show "thinking" only before streaming starts, hide once summary appears
+    return hasCompletion ? { type: "idle" } : { type: "thinking" };
   }
   return { type: state.status };
 }

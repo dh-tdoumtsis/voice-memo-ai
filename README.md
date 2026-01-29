@@ -1,6 +1,6 @@
 # VoiceMemo AI
 
-A modern voice memo app that records audio, transcribes it using AI, and generates structured summaries with key takeaways and action items.
+A voice memo app that records audio and transcribes it using AI, and generates structured summaries with key takeaways and action items.
 
 ## ✨ Features
 
@@ -52,14 +52,16 @@ OPENAI_API_KEY=your_openai_key
 
 ## 🗺️ Roadmap
 
-**v1.0 (Current)**
-- ✅ Voice recording & transcription
-- ✅ AI-powered summaries with streaming
-- ✅ Multi-provider support
-- ✅ State machine architecture
+**Current version**
+- Voice recording & transcription
+- AI-powered summaries with streaming
+- Multi-provider support
+- State machine architecture
 
-**v2.0 (Coming Soon)**
-- 🔜 User authentication (login/signup)
-- 🔜 Database persistence (Prisma + PostgreSQL)
-- 🔜 Memo history & search
-- 🔜 User-specific memos
+**Next steps**
+- User authentication (login/signup)
+- Database persistence (Prisma + PostgreSQL?)
+- Memo history & search
+- User-specific memos
+- PWA with offline support
+- Background sync
