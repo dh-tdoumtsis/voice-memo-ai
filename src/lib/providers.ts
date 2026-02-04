@@ -1,30 +1,49 @@
+import { hasApiKey } from "./api-keys";
+
 export type AIProvider = "mock" | "gemini" | "openai";
 export type LLMProvider = Exclude<AIProvider, "mock">;
 
-const IS_DEV = process.env.NODE_ENV === "development";
-const VALID_PROVIDERS: AIProvider[] = IS_DEV ? ["mock", "gemini", "openai"] : ["gemini", "openai"];
+export interface ProviderOption {
+  value: AIProvider;
+  label: string;
+}
 
-const PROVIDER_LABELS: Record<AIProvider, string> = {
-  mock: "Mock",
-  gemini: "Gemini",
-  openai: "OpenAI",
-};
+// Centralized provider configuration with all metadata
+export const PROVIDER_CONFIG = {
+  gemini: { label: "Gemini", priority: 1 },
+  openai: { label: "OpenAI", priority: 2 },
+  mock: { label: "Mock", priority: 3 },
+} as const;
 
-const DEFAULT_FALLBACK_PROVIDER: AIProvider = IS_DEV ? "mock" : "gemini";
+export function getProviderLabel(provider: AIProvider): string {
+  return PROVIDER_CONFIG[provider].label;
+}
 
-const rawProvider = process.env.AI_PROVIDER || DEFAULT_FALLBACK_PROVIDER;
-export const DEFAULT_AI_PROVIDER: AIProvider = VALID_PROVIDERS.includes(rawProvider as AIProvider)
-  ? (rawProvider as AIProvider)
-  : DEFAULT_FALLBACK_PROVIDER;
+// Server-side only: Get available providers based on API keys
+export function getValidProvidersSync(): AIProvider[] {
+  const IS_DEV = process.env.NODE_ENV === "development";
 
-export const PROVIDER_OPTIONS: { value: AIProvider; label: string }[] = VALID_PROVIDERS.map(
-  (p) => ({ value: p, label: PROVIDER_LABELS[p] })
-);
+  const available = (Object.keys(PROVIDER_CONFIG) as AIProvider[])
+    .filter((p) => {
+      if (p === "mock") return IS_DEV;
+      return hasApiKey(p);
+    })
+    .sort((a, b) => PROVIDER_CONFIG[a].priority - PROVIDER_CONFIG[b].priority);
+
+  if (available.length === 0) {
+    throw new Error(
+      "No valid AI providers configured. Please set GOOGLE_GENERATIVE_AI_API_KEY or OPENAI_API_KEY in .env"
+    );
+  }
+
+  return available;
+}
 
 export function resolveProvider(override: unknown): AIProvider {
-  const provider = typeof override === "string" ? override.trim().toLowerCase() : "";
-  if (provider && VALID_PROVIDERS.includes(provider as AIProvider)) {
-    return provider as AIProvider;
-  }
-  return DEFAULT_AI_PROVIDER;
+  const validProviders = getValidProvidersSync();
+
+  if (typeof override !== "string") return validProviders[0];
+
+  const normalized = override.trim().toLowerCase() as AIProvider;
+  return validProviders.includes(normalized) ? normalized : validProviders[0];
 }

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { transcribeAudio } from "@/app/actions";
+import { transcribeAudio, getAvailableProviders } from "@/app/actions";
 import { useCompletion } from "@ai-sdk/react";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
-import { DEFAULT_AI_PROVIDER } from "@/lib/providers";
+import type { ProviderOption } from "@/lib/providers";
 import { ProviderSelect } from "@/components/provider-select";
 import { RecordButton } from "@/components/record-button";
 import { StatusIndicator } from "@/components/status-indicator";
@@ -16,7 +16,28 @@ import { getDisplayStatus } from "@/types/app-state";
 export default function VoiceRecorder() {
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();
   const [state, setState] = useState<AppState>({ status: "idle" });
-  const [provider, setProvider] = useState<string>(DEFAULT_AI_PROVIDER);
+  const [provider, setProvider] = useState<string>("");
+  const [providerOptions, setProviderOptions] = useState<ProviderOption[]>([]);
+  const [isLoadingProviders, setIsLoadingProviders] = useState(true);
+
+  // Fetch available providers on mount
+  useEffect(() => {
+    getAvailableProviders()
+      .then(({ providers }) => {
+        setProviderOptions(providers);
+        setProvider(providers[0].value);
+      })
+      .catch((error) => {
+        console.error("Failed to load providers:", error);
+        setState({
+          status: "error",
+          message: "Failed to load AI providers. Please check your configuration.",
+        });
+      })
+      .finally(() => {
+        setIsLoadingProviders(false);
+      });
+  }, []);
 
   const { complete, completion, isLoading: isThinking } = useCompletion({
     api: "/api/summarize",
@@ -71,11 +92,16 @@ export default function VoiceRecorder() {
         <p className="text-sm text-slate-500">Capture ideas. Get structured summaries.</p>
       </div>
 
-      <ProviderSelect
-        value={provider}
-        onChange={setProvider}
-        disabled={isRecording || isBusy}
-      />
+      {isLoadingProviders ? (
+        <div className="text-sm text-slate-500">Loading providers...</div>
+      ) : (
+        <ProviderSelect
+          value={provider}
+          onChange={setProvider}
+          disabled={isRecording || isBusy}
+          options={providerOptions}
+        />
+      )}
 
       <div className="flex gap-6 items-center">
         <RecordButton
