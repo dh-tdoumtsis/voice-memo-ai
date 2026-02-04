@@ -4,7 +4,7 @@ import type { AIProvider, LLMProvider } from "./providers";
 import { PROVIDER_CONFIG, resolveProvider } from "./providers";
 import { getApiKey } from "./api-keys";
 import { DEMO_SUMMARY } from "./demo-data";
-import { SUMMARY_SYSTEM_PROMPT } from "./ai-config";
+import { SUMMARY_SYSTEM_PROMPT } from "./prompts";
 
 const MODELS: Record<LLMProvider, () => Promise<LanguageModelV3>> = {
   gemini: async () => {

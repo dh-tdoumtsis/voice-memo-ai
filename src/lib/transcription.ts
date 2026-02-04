@@ -2,7 +2,7 @@ import type { AIProvider,  } from "./providers";
 import { resolveProvider, PROVIDER_CONFIG } from "./providers";
 import { getApiKey } from "./api-keys";
 import { DEMO_TRANSCRIPT } from "./demo-data";
-import { TRANSCRIBE_PROMPT } from "./ai-config";
+import { TRANSCRIBE_PROMPT } from "./prompts";
 
 async function transcribeWithMock(): Promise<string> {
   return DEMO_TRANSCRIPT;
