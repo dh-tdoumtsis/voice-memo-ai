@@ -40,7 +40,6 @@ Open [http://localhost:3000](http://localhost:3000)
 ## 🔧 Environment Variables
 
 ```bash
-# OpenAI (Whisp
 # AI Providers are auto-detected based on which API keys you set
 # The app will show only the providers with valid API keys
 
