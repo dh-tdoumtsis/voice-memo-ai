@@ -25,14 +25,14 @@ A voice memo app that records audio and transcribes it using AI, and generates s
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Set up environment variables
 cp .env.example .env
 # Add your API keys to .env
 
 # Run development server
-npm run dev
+pnpm  dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
