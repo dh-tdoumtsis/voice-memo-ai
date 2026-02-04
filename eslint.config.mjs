@@ -21,6 +21,7 @@ const eslintConfig = defineConfig([
     files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "no-console": ["warn", { allow: ["error"] }],
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
     },
   },
 ]);

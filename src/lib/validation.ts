@@ -5,7 +5,7 @@ export const TranscribeSchema = z.object({
   file: z
     .instanceof(File, { message: "Audio file is required" })
     .refine((file) => file.size > 0, "File is empty")
-    .refine((file) => file.size < 10 * 1024 * 1024, "File size must be less than 10MB"),
+    .refine((file) => file.size < 25 * 1024 * 1024, "File size must be less than 25MB"),
   provider: z.string().optional(),
 });
 
